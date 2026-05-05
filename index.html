@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TECHSUBS — Learn IT & Cybersecurity</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════ Même CSS que ton code original ══════════════════ */
+:root {
+  --bg: #0a0a0a;
+  --bg2: #111111;
+  --bg3: #161616;
+  --bg4: #1c1c1c;
+  --green: #00ff88;
+  --green2: #00cc6a;
+  --green3: #00ff8822;
+  --green4: #00ff8811;
+  --red: #ff4444;
+  --amber: #ffaa00;
+  --blue: #00aaff;
+  --text: #e8e8e8;
+  --muted: #888;
+  --border: #2a2a2a;
+  --border2: #333;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-head: 'Rajdhani', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --radius: 8px;
+  --radius-lg: 14px;
+  --glow: 0 0 20px #00ff8833;
+  --glow2: 0 0 40px #00ff8822;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--green2); border-radius: 99px; }
+::selection { background: var(--green3); color: var(--green); }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--green);
+  text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+.nav-logo::before { content: '>'; animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-family: var(--font-head);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--green); }
+.nav-actions { display: flex; gap: 10px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px;
+  border-radius: var(--radius);
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  border: none;
+}
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border2);
+  color: var(--muted);
+}
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+.btn-green {
+  background: var(--green);
+  color: #000;
+  box-shadow: var(--glow);
+}
+.btn-green:hover {
+  background: var(--green2);
+  box-shadow: var(--glow2);
+  transform: translateY(-1px);
+}
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--green);
+  color: var(--green);
+}
+.btn-outline:hover { background: var(--green3); }
+
+/* HAMBURGER */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--muted);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: rgba(10,10,10,0.97);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem 2rem;
+  flex-direction: column;
+  gap: 1.2rem;
+  z-index: 999;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { color: var(--text); text-decoration: none; font-family: var(--font-head); font-size: 16px; font-weight: 600; letter-spacing: 1px; cursor: pointer; }
+.mobile-menu a:hover { color: var(--green); }
+
+/* PAGES */
+.page { display: none; padding-top: 64px; min-height: 100vh; }
+.page.active { display: block; }
+.grid-bg {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+}
+
+/* HERO */
+.hero {
+  min-height: calc(100vh - 64px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero-glow {
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, #00ff8815 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.hero-content { text-align: center; max-width: 800px; position: relative; z-index: 1; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green4);
+  border: 1px solid #00ff8833;
+  color: var(--green);
+  padding: 6px 16px;
+  border-radius: 99px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 2rem;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-tag::before { content: '//'; color: var(--green2); }
+.hero h1 {
+  font-family: var(--font-head);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.hero h1 .accent { color: var(--green); text-shadow: var(--glow); }
+.hero p {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+.hero-btns {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+.hero-stats {
+  display: flex; gap: 3rem; justify-content: center;
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--border);
+  animation: fadeUp 0.7s 0.4s ease both;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  color: var(--green);
+  display: block;
+}
+.stat-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* SECTION */
+.section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 3rem; }
+.section-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.section-sub { color: var(--muted); font-size: 15px; margin-top: 0.75rem; }
+
+/* CATEGORY CARDS */
+.cats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+.cat-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.cat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--green);
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+.cat-card:hover { border-color: #00ff8833; transform: translateY(-4px); box-shadow: var(--glow); }
+.cat-card:hover::before { transform: scaleX(1); }
+.cat-icon { font-size: 32px; margin-bottom: 1rem; display: block; }
+.cat-title { font-family: var(--font-head); font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+.cat-count { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+
+/* COURSES */
+.courses-header {
+  padding: 3rem 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.level-section { margin-bottom: 3rem; }
+.level-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px;
+  border-radius: 99px;
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.level-badge.beginner { background: #00ff8820; color: var(--green); border: 1px solid #00ff8833; }
+.level-badge.intermediate { background: #ffaa0020; color: var(--amber); border: 1px solid #ffaa0033; }
+.level-badge.advanced { background: #ff444420; color: var(--red); border: 1px solid #ff444433; }
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+.course-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.course-card:hover { border-color: #00ff8833; transform: translateY(-2px); }
+.course-icon-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.course-icon { font-size: 28px; }
+.course-level-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+}
+.dot-green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.dot-amber { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+.dot-red { background: var(--red); box-shadow: 0 0 6px var(--red); }
+.course-title {
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.course-desc { font-size: 13px; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
+.course-meta {
+  display: flex; gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+.course-meta span { display: flex; align-items: center; gap: 4px; }
+
+/* COURSE DETAIL */
+#page-detail { display: none; padding-top: 64px; }
+#page-detail.active { display: block; }
+.detail-hero {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 2rem;
+}
+.detail-hero-inner { max-width: 900px; margin: 0 auto; }
+.breadcrumb {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+.breadcrumb span { color: var(--green); }
+.detail-title {
+  font-family: var(--font-head);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.detail-meta {
+  display: flex; flex-wrap: wrap; gap: 1.5rem;
+  font-size: 13px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+}
+.detail-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+}
+@media (max-width: 768px) {
+  .detail-body { grid-template-columns: 1fr; }
+}
+.lessons-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.lesson-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.lesson-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.lesson-header:hover { background: var(--bg3); }
+.lesson-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--green);
+  margin-right: 12px;
+  min-width: 28px;
+}
+.lesson-name { font-weight: 500; font-size: 14px; flex: 1; }
+.lesson-toggle {
+  font-size: 12px;
+  color: var(--muted);
+  transition: transform 0.3s;
+}
+.lesson-toggle.open { transform: rotate(180deg); }
+.lesson-body {
+  padding: 0 1.25rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.3s;
+}
+.lesson-body.open {
+  max-height: 600px;
+  padding: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+.lesson-body p { font-size: 14px; color: var(--muted); margin-bottom: 1rem; }
+.code-block {
+  background: #0d0d0d;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #c8e6c9;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  position: relative;
+}
+.code-block .code-lang {
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.code-kw { color: #80cbc4; }
+.code-str { color: #a5d6a7; }
+.code-cm { color: #546e7a; }
+.code-fn { color: #fff176; }
+
+/* PROGRESS SIDEBAR */
+.progress-sidebar { position: sticky; top: 80px; }
+.sidebar-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.progress-label {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+}
+.progress-bar {
+  background: var(--bg4);
+  border-radius: 99px;
+  height: 8px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green2), var(--green));
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+.progress-pct {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--green);
+}
+.quiz-card {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+.quiz-q {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+.quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.quiz-opt {
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+.quiz-opt:hover { border-color: var(--green); color: var(--green); }
+.quiz-opt.correct { background: #00ff8820; border-color: var(--green); color: var(--green); }
+.quiz-opt.wrong { background: #ff444420; border-color: var(--red); color: var(--red); }
+
+/* DASHBOARD */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+@media (max-width: 900px) {
+  .dashboard-grid { grid-template-columns: 1fr; }
+}
+.dash-sidebar {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  height: fit-content;
+}
+.user-avatar {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green2), #006644);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  box-shadow: var(--glow);
+}
+.user-name { font-family: var(--font-head); font-size: 18px; font-weight: 700; }
+.user-handle { font-family: var(--font-mono); font-size: 12px; color: var(--green); margin-bottom: 1.5rem; }
+.dash-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.dash-nav li a {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 14px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.dash-nav li a:hover, .dash-nav li a.active {
+  background: var(--green4);
+  color: var(--green);
+}
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+.metric-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+}
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  color: var(--green);
+  display: block;
+}
+.metric-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.dash-section-title {
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+.in-progress-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.ip-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.ip-icon { font-size: 24px; flex-shrink: 0; }
+.ip-info { flex: 1; }
+.ip-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+.ip-bar-bg { background: var(--bg4); border-radius: 99px; height: 4px; }
+.ip-bar-fill { height: 4px; background: var(--green); border-radius: 99px; }
+.ip-pct { font-family: var(--font-mono); font-size: 11px; color: var(--muted); margin-left: auto; }
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1rem;
+}
+.badge-item {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+.badge-item:hover { border-color: #00ff8833; transform: translateY(-2px); }
+.badge-item.locked { opacity: 0.4; }
+.badge-emoji { font-size: 28px; display: block; margin-bottom: 6px; }
+.badge-name { font-size: 11px; color: var(--muted); }
+
+/* BLOG */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+.blog-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+.blog-card:hover { border-color: #00ff8833; transform: translateY(-3px); }
+.blog-img {
+  height: 160px;
+  background: linear-gradient(135deg, var(--bg3), var(--bg4));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px;
+  border-bottom: 1px solid var(--border);
+}
+.blog-content { padding: 1.5rem; }
+.blog-tag {
+  display: inline-block;
+  background: var(--green4);
+  color: var(--green);
+  border: 1px solid #00ff8833;
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 1px;
+  margin-bottom: 0.75rem;
+}
+.blog-title {
+  font-family: var(--font-head);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+.blog-excerpt { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+.blog-meta { font-family: var(--font-mono); font-size: 11px; color: #555; display: flex; gap: 1rem; }
+
+/* CONTACT */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+.contact-info h2 {
+  font-family: var(--font-head);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.contact-info p { color: var(--muted); font-size: 14px; margin-bottom: 2rem; }
+.contact-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  margin-bottom: 1.25rem;
+}
+.contact-item-icon {
+  width: 36px; height: 36px;
+  background: var(--green4);
+  border: 1px solid #00ff8833;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.contact-item-text .label { font-size: 11px; color: var(--muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 1px; }
+.contact-item-text .value { font-size: 14px; color: var(--text); margin-top: 2px; }
+.social-links { display: flex; gap: 10px; margin-top: 2rem; flex-wrap: wrap; }
+.social-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.social-btn:hover { border-color: var(--green); color: var(--green); }
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.form-input, .form-textarea {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: border-color 0.2s;
+  outline: none;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--green); }
+.form-textarea { resize: vertical; min-height: 130px; }
+
+/* AUTH MODAL */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(4px);
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+}
+.modal-title {
+  font-family: var(--font-head);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 2rem; }
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  background: none; border: none;
+  color: var(--muted); font-size: 20px;
+  cursor: pointer;
+}
+.modal-switch {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 1.5rem;
+}
+.modal-switch a { color: var(--green); cursor: pointer; text-decoration: none; }
+.search-bar {
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  position: relative;
+}
+.search-bar input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 10px 14px 10px 40px;
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-bar input:focus { border-color: var(--green); }
+.search-bar::before { content: '🔍'; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; }
+.warning-banner {
+  background: #ff990015;
+  border: 1px solid #ff990033;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  color: #ffbb55;
+  margin-bottom: 1.5rem;
+}
+footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+.footer-logo {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  color: var(--green);
+  letter-spacing: 3px;
+  margin-bottom: 0.5rem;
+}
+.footer-sub { font-size: 12px; color: var(--muted); margin-bottom: 1.5rem; }
+.footer-links {
+  display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
+  list-style: none; margin-bottom: 2rem;
+}
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 13px; transition: color 0.2s; cursor: pointer; }
+.footer-links a:hover { color: var(--green); }
+.footer-copy { font-family: var(--font-mono); font-size: 11px; color: #444; }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .nav-actions { display: none; }
+  .hamburger { display: flex; }
+  .hero-stats { gap: 2rem; }
+  .dashboard-grid { padding: 1rem; }
+}
+.notif {
+  position: fixed; bottom: 2rem; right: 2rem;
+  background: var(--bg2);
+  border: 1px solid var(--green);
+  border-radius: var(--radius);
+  padding: 12px 20px;
+  font-size: 13px;
+  color: var(--green);
+  font-family: var(--font-mono);
+  z-index: 3000;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--glow);
+}
+.notif.show { transform: translateY(0); opacity: 1; }
+.typing::after {
+  content: '|';
+  animation: blink 0.8s infinite;
+  color: var(--green);
+}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">TECHSUBS</a>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">Accueil</a></li>
+    <li><a onclick="showPage('courses')" id="nav-courses">Cours</a></li>
+    <li><a onclick="showPage('blog')" id="nav-blog">Blog</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+    <li><a onclick="showPage('dashboard')" id="nav-dashboard">Dashboard</a></li>
+  </ul>
+  <div class="nav-actions" id="nav-actions">
+    <button class="btn btn-ghost" onclick="openModal('login')">Connexion</button>
+    <button class="btn btn-green" onclick="openModal('register')">S'inscrire</button>
+  </div>
+  <div class="nav-actions" id="nav-user" style="display:none">
+    <span id="user-points" style="color:var(--green);font-family:var(--font-mono);margin-right:10px">⭐ 0</span>
+    <button class="btn btn-outline" onclick="logout()">Déconnexion</button>
+  </div>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="showPage('home');toggleMenu()">Accueil</a>
+  <a onclick="showPage('courses');toggleMenu()">Cours</a>
+  <a onclick="showPage('blog');toggleMenu()">Blog</a>
+  <a onclick="showPage('contact');toggleMenu()">Contact</a>
+  <a onclick="showPage('dashboard');toggleMenu()">Dashboard</a>
+  <button class="btn btn-green" onclick="openModal('register');toggleMenu()" style="width:fit-content">S'inscrire</button>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-login">
+      <div class="modal-title">Connexion</div>
+      <div class="modal-sub">Bienvenue sur <span style="color:var(--green)">TECHSUBS</span></div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="login-email" type="email" placeholder="user@techsubs.io">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <input class="form-input" id="login-password" type="password" placeholder="••••••••">
+        </div>
+        <button class="btn btn-green" style="width:100%;justify-content:center;padding:12px" onclick="handleLogin()">Se connecter</button>
+      </div>
+      <div class="modal-switch">Pas de compte ? <a onclick="openModal('register')">S'inscrire</a></div>
+    </div>
+    <div id="modal-register" style="display:none">
+      <div class="modal-title">Créer un compte</div>
+      <div class="modal-sub">Rejoignez <span style="color:var(--green)">TECHSUBS</span></div>
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Nom d'utilisateur</label>
+          <input class="form-input" id="reg-username" type="text" placeholder="hacker_pro">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input class="form-input" id="reg-email" type="email" placeholder="user@techsubs.io">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mot de passe</label>
+          <input class="form-input" id="reg-password" type="password" placeholder="••••••••">
+        </div>
+        <button class="btn btn-green" style="width:100%;justify-content:center;padding:12px" onclick="handleRegister()">Créer mon compte</button>
+      </div>
+      <div class="modal-switch">Déjà inscrit ? <a onclick="openModal('login')">Se connecter</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"></div>
+
+<!-- ══════════════════ HOME PAGE ══════════════════ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-tag">TECHSUBS — Plateforme éducative</div>
+      <h1>Apprends l'IT &amp; la<br><span class="accent">Cybersécurité</span><br>étape par étape</h1>
+      <p>De débutant à expert. Des cours structurés, des exercices pratiques et des exemples concrets pour maîtriser l'informatique et la sécurité.</p>
+      <div class="hero-btns">
+        <button class="btn btn-green" onclick="showPage('courses')" style="padding:12px 28px;font-size:14px">Commencer à apprendre</button>
+        <button class="btn btn-outline" onclick="showPage('courses')" style="padding:12px 28px;font-size:14px">Voir les cours</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Cours</span></div>
+        <div class="stat"><span class="stat-num">12K+</span><span class="stat-label">Étudiants</span></div>
+        <div class="stat"><span class="stat-num">3</span><span class="stat-label">Niveaux</span></div>
+        <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Gratuit</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-tag">// categories</span>
+      <h2 class="section-title">Explorez nos <span style="color:var(--green)">domaines</span></h2>
+      <p class="section-sub">Choisissez votre chemin d'apprentissage</p>
+    </div>
+    <div class="cats-grid">
+      <div class="cat-card" onclick="showPage('courses')">
+        <span class="cat-icon">💻</span>
+        <div class="cat-title">Programmation</div>
+        <div class="cat-count">12 cours · HTML, CSS, JS, Python</div>
+      </div>
+      <div class="cat-card" onclick="showPage('courses')">
+        <span class="cat-icon">🔒</span>
+        <div class="cat-title">Cybersécurité</div>
+        <div class="cat-count">10 cours · Ethical hacking, Pentest</div>
+      </div>
+      <div class="cat-card" onclick="showPage('courses')">
+        <span class="cat-icon">📊</span>
+        <div class="cat-title">Outils Office</div>
+        <div class="cat-count">8 cours · Word, Excel, PowerPoint</div>
+      </div>
+      <div class="cat-card" onclick="showPage('courses')">
+        <span class="cat-icon">🌐</span>
+        <div class="cat-title">Réseaux</div>
+        <div class="cat-count">9 cours · IP, DNS, TCP/IP, Routage</div>
+      </div>
+      <div class="cat-card" onclick="showPage('courses')">
+        <span class="cat-icon">🐧</span>
+        <div class="cat-title">Linux</div>
+        <div class="cat-count">7 cours · CLI, Shell, Kali Linux</div>
+      </div>
+      <div class="cat-card" onclick="showPage('courses')">
+        <span class="cat-icon">🗄️</span>
+        <div class="cat-title">Bases de données</div>
+        <div class="cat-count">5 cours · MySQL, SQL, NoSQL</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:4rem 2rem;margin-bottom:0">
+    <div class="section-header" style="margin-bottom:2rem">
+      <span class="section-tag">// parcours</span>
+      <h2 class="section-title">Commence de <span style="color:var(--green)">zéro</span></h2>
+      <p class="section-sub">Notre parcours "Start from Zero" te guide pas à pas</p>
+    </div>
+    <div style="max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:1rem">
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:1.25rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer" onclick="showPage('courses')">
+        <div style="width:36px;height:36px;background:var(--green4);border:1px solid #00ff8833;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);color:var(--green);font-size:13px;flex-shrink:0">01</div>
+        <div><div style="font-weight:600;font-size:14px;margin-bottom:4px">Introduction à l'informatique</div><div style="font-size:13px;color:var(--muted)">Comprendre le matériel, les systèmes d'exploitation et les bases</div></div>
+      </div>
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:1.25rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer" onclick="showPage('courses')">
+        <div style="width:36px;height:36px;background:var(--green4);border:1px solid #00ff8833;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);color:var(--green);font-size:13px;flex-shrink:0">02</div>
+        <div><div style="font-weight:600;font-size:14px;margin-bottom:4px">HTML & CSS — Création web</div><div style="font-size:13px;color:var(--muted)">Construire tes premières pages web de A à Z</div></div>
+      </div>
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:1.25rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer" onclick="showPage('courses')">
+        <div style="width:36px;height:36px;background:var(--green4);border:1px solid #00ff8833;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);color:var(--green);font-size:13px;flex-shrink:0">03</div>
+        <div><div style="font-weight:600;font-size:14px;margin-bottom:4px">Réseaux & Linux</div><div style="font-size:13px;color:var(--muted)">Comprendre comment internet fonctionne et maîtriser la ligne de commande</div></div>
+      </div>
+      <div style="display:flex;gap:1.5rem;align-items:flex-start;padding:1.25rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer" onclick="showPage('courses')">
+        <div style="width:36px;height:36px;background:var(--green4);border:1px solid #00ff8833;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);color:var(--green);font-size:13px;flex-shrink:0">04</div>
+        <div><div style="font-weight:600;font-size:14px;margin-bottom:4px">Cybersécurité — Ethical Hacking</div><div style="font-size:13px;color:var(--muted)">Apprendre à sécuriser les systèmes de façon éthique et légale</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">> TECHSUBS_</div>
+    <div class="footer-sub">Développé par <span style="color:var(--green)">TECHSUBS Team</span></div>
+    <ul class="footer-links">
+      <li><a onclick="showPage('home')">Accueil</a></li>
+      <li><a onclick="showPage('courses')">Cours</a></li>
+      <li><a onclick="showPage('blog')">Blog</a></li>
+      <li><a onclick="showPage('contact')">Contact</a></li>
+    </ul>
+    <div class="footer-copy">© 2025 TECHSUBS — Educational purposes only.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════ COURSES PAGE ══════════════════ -->
+<div class="page" id="page-courses">
+  <div class="courses-header">
+    <span class="section-tag">// catalogue</span>
+    <h1 class="section-title" style="margin-bottom:1rem">Tous les <span style="color:var(--green)">cours</span></h1>
+    <div class="search-bar">
+      <input type="text" placeholder="Rechercher un cours..." oninput="filterCourses(this.value)">
+    </div>
+    <div class="warning-banner">
+      ⚠️ <span>Tous les contenus sur la cybersécurité sont <strong>à des fins éducatives uniquement</strong>. N'utilisez jamais ces connaissances pour des activités illégales.</span>
+    </div>
+  </div>
+
+  <div style="max-width:1200px;margin:0 auto;padding:0 2rem 4rem" id="courses-container">
+    <!-- Les cours seront chargés dynamiquement via JavaScript -->
+    <div id="courses-loading" style="text-align:center;padding:4rem">Chargement des cours...</div>
+  </div>
+</div>
+
+<!-- ══════════════════ COURSE DETAIL PAGE ══════════════════ -->
+<div id="page-detail">
+  <div class="detail-hero">
+    <div class="detail-hero-inner">
+      <div class="breadcrumb">
+        <a onclick="showPage('courses')" style="color:var(--muted);text-decoration:none;cursor:pointer">Cours</a>
+        &nbsp;/&nbsp;<span id="detail-breadcrumb"></span>
+      </div>
+      <div class="detail-title" id="detail-title"></div>
+      <div class="detail-meta">
+        <span>📚 <span id="detail-lessons-count"></span> leçons</span>
+        <span style="color:var(--green)">✓ Certificat inclus</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-body">
+    <div>
+      <div class="warning-banner" id="detail-warning" style="display:none">
+        ⚠️ <span>Ce cours contient des notions de sécurité. <strong>Usage éducatif uniquement.</strong> Ne jamais appliquer sur des systèmes sans autorisation explicite.</span>
+      </div>
+
+      <div class="lessons-list" id="lessons-list"></div>
+
+      <div style="margin-top:2rem;padding:1.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg)">
+        <div style="font-family:var(--font-head);font-weight:700;font-size:16px;margin-bottom:0.75rem">📖 Prochaine leçon recommandée</div>
+        <div id="next-lesson" style="font-size:14px;color:var(--muted)">Terminez une leçon pour voir la recommandation.</div>
+      </div>
+    </div>
+
+    <div class="progress-sidebar">
+      <div class="sidebar-card">
+        <div class="progress-label">Progression du cours</div>
+        <div class="progress-bar"><div class="progress-fill" id="course-progress-fill" style="width:0%"></div></div>
+        <div class="progress-pct" id="course-progress-pct">0% complété</div>
+      </div>
+      <div class="sidebar-card">
+        <div style="font-family:var(--font-head);font-weight:700;font-size:14px;margin-bottom:1rem">🧠 Mini Quiz</div>
+        <div id="sidebar-quiz"></div>
+      </div>
+      <div style="margin-top:1rem">
+        <button class="btn btn-green" style="width:100%;justify-content:center" onclick="notify('📥 Téléchargement du guide PDF...')">
+          📥 Télécharger le guide PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ DASHBOARD PAGE ══════════════════ -->
+<div class="page" id="page-dashboard">
+  <div class="dashboard-grid">
+    <div class="dash-sidebar">
+      <div class="user-avatar" id="dash-avatar">?</div>
+      <div class="user-name" id="dash-username">Utilisateur</div>
+      <div class="user-handle" id="dash-email">user@techsubs.io</div>
+      <ul class="dash-nav">
+        <li><a class="active"><span class="di">📊</span> Vue d'ensemble</a></li>
+        <li><a><span class="di">📚</span> Mes cours</a></li>
+        <li><a><span class="di">🏆</span> Badges</a></li>
+        <li><a><span class="di">⚙️</span> Paramètres</a></li>
+      </ul>
+    </div>
+
+    <div class="dash-main">
+      <div class="metrics-row">
+        <div class="metric-card">
+          <span class="metric-val" id="stat-points">0</span>
+          <span class="metric-label">Points XP</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-val" id="stat-courses-completed">0</span>
+          <span class="metric-label">Cours terminés</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-val" id="-stat-lessons-done">0</span>
+          <span class="metric-label">Leçons complétées</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-val" id="stat-streak">7</span>
+          <span class="metric-label">Jours consécutifs</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="dash-section-title">🔄 Cours en cours</div>
+        <div class="in-progress-list" id="in-progress-list"></div>
+      </div>
+
+      <div>
+        <div class="dash-section-title">🏆 Badges & Récompenses</div>
+        <div class="badges-grid" id="badges-grid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ BLOG PAGE ══════════════════ -->
+<div class="page" id="page-blog">
+  <div class="section">
+    <div class="section-header">
+      <span class="section-tag">// ressources & articles</span>
+      <h1 class="section-title">Blog & <span style="color:var(--green)">Tutoriels</span></h1>
+      <p class="section-sub">Actualités tech, guides pratiques et astuces cybersécurité</p>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-img">🔒</div>
+        <div class="blog-content">
+          <div class="blog-tag">CYBERSEC</div>
+          <div class="blog-title">Top 10 OWASP 2025 — Ce qui a changé</div>
+          <div class="blog-excerpt">Le guide complet des nouvelles vulnérabilités web classées par l'OWASP et comment s'en protéger.</div>
+          <div class="blog-meta"><span>15 Jan 2025</span><span>8 min</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">🐧</div>
+        <div class="blog-content">
+          <div class="blog-tag">LINUX</div>
+          <div class="blog-title">50 commandes Linux indispensables en 2025</div>
+          <div class="blog-excerpt">De ls à grep en passant par awk et sed — le guide de référence pour maîtriser le terminal Linux.</div>
+          <div class="blog-meta"><span>10 Jan 2025</span><span>12 min</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">🌐</div>
+        <div class="blog-content">
+          <div class="blog-tag">WEB</div>
+          <div class="blog-title">Comment fonctionne HTTPS et SSL/TLS</div>
+          <div class="blog-excerpt">Explication claire du chiffrement asymétrique, des certificats et de la poignée de main TLS.</div>
+          <div class="blog-meta"><span>5 Jan 2025</span><span>6 min</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">🕵️</div>
+        <div class="blog-content">
+          <div class="blog-tag">HACKING</div>
+          <div class="blog-title">Nmap — Scanner les ports comme un pro</div>
+          <div class="blog-excerpt">Guide éducatif complet sur Nmap : syntaxe, types de scans et interprétation des résultats.</div>
+          <div class="blog-meta"><span>28 Déc 2024</span><span>10 min</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">💻</div>
+        <div class="blog-content">
+          <div class="blog-tag">CODE</div>
+          <div class="blog-title">JavaScript moderne — ES2025 en pratique</div>
+          <div class="blog-excerpt">Toutes les nouvelles features JS avec des exemples concrets : async/await, optional chaining, etc.</div>
+          <div class="blog-meta"><span>20 Déc 2024</span><span>9 min</span></div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img">🗄️</div>
+        <div class="blog-content">
+          <div class="blog-tag">DATABASE</div>
+          <div class="blog-title">SQL Injection — Comprendre pour se protéger</div>
+          <div class="blog-excerpt">Analyse éducative des injections SQL, comment elles fonctionnent et les bonnes pratiques de prévention.</div>
+          <div class="blog-meta"><span>15 Déc 2024</span><span>7 min</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ CONTACT PAGE ══════════════════ -->
+<div class="page" id="page-contact">
+  <div class="section">
+    <div class="section-header">
+      <span class="section-tag">// techsubs</span>
+      <h1 class="section-title">Contactez <span style="color:var(--green)">l'équipe</span></h1>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>TECHSUBS</h2>
+        <p>Nous sommes une équipe passionnée par l'éducation en cybersécurité et informatique. Notre mission : rendre ces connaissances accessibles à tous.</p>
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div class="contact-item-text">
+            <div class="label">Email</div>
+            <div class="value">contact@techsubs.io</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">💬</div>
+          <div class="contact-item-text">
+            <div class="label">Discord</div>
+            <div class="value">discord.gg/techsubs</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <div class="label">Localisation</div>
+            <div class="value">En ligne — mondial</div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a class="social-btn" href="#">🐦 Twitter</a>
+          <a class="social-btn" href="#">💬 Discord</a>
+          <a class="social-btn" href="#">▶️ YouTube</a>
+          <a class="social-btn" href="#">💼 LinkedIn</a>
+          <a class="social-btn" href="#">🐙 GitHub</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="sidebar-card">
+          <div style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:1.5rem">Envoyer un message</div>
+          <div class="contact-form">
+            <div class="form-group">
+              <label class="form-label">Nom</label>
+              <input class="form-input" id="contact-name" type="text" placeholder="Votre nom">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="form-input" id="contact-email" type="email" placeholder="votre@email.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sujet</label>
+              <input class="form-input" id="contact-subject" type="text" placeholder="Question / Bug / Suggestion">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="form-textarea" id="contact-message" placeholder="Votre message..."></textarea>
+            </div>
+            <button class="btn btn-green" style="width:100%;justify-content:center;padding:12px" onclick="notify('✅ Message envoyé avec succès !')">Envoyer le message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════ ÉTAT GLOBAL ══════════════════
+let currentUser = null;
+let currentCourseId = null;
+let currentCourseLessons = [];
+let userCompletedLessons = {}; // { lesson_id: true }
+
+// ══════════════════ UTILITAIRES ══════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-detail').classList.remove('active');
+  const el = document.getElementById('page-' + id);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const nav = document.getElementById('nav-' + id);
+  if (nav) nav.classList.add('active');
+  window.scrollTo(0, 0);
+  
+  if (id === 'dashboard' && currentUser) loadDashboard();
+  if (id === 'courses') loadCourses();
+}
+
+function notify(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg;
+  n.classList.add('show');
+  clearTimeout(n._t);
+  n._t = setTimeout(() => n.classList.remove('show'), 3000);
+}
+
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+
+// ══════════════════ AUTHENTIFICATION ══════════════════
+function openModal(type) {
+  document.getElementById('auth-modal').classList.add('open');
+  document.getElementById('modal-login').style.display = type === 'login' ? 'block' : 'none';
+  document.getElementById('modal-register').style.display = type === 'register' ? 'block' : 'none';
+}
+
+function closeModal() {
+  document.getElementById('auth-modal').classList.remove('open');
+}
+
+async function handleRegister() {
+  const username = document.getElementById('reg-username').value;
+  const email = document.getElementById('reg-email').value;
+  const password = document.getElementById('reg-password').value;
+  
+  const res = await fetch('/api/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, email, password })
+  });
+  const data = await res.json();
+  if (data.success) {
+    currentUser = data.user;
+    closeModal();
+    notify(`✅ Bienvenue ${username} !`);
+    updateUIBasedOnAuth();
+    showPage('dashboard');
+  } else {
+    notify('❌ ' + (data.error || 'Erreur lors de l\'inscription'));
+  }
+}
+
+async function handleLogin() {
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  
+  const res = await fetch('/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  const data = await res.json();
+  if (data.success) {
+    currentUser = data.user;
+    closeModal();
+    notify(`✅ Connecté ! Bienvenue ${currentUser.username}`);
+    updateUIBasedOnAuth();
+    loadUserProgress();
+    showPage('dashboard');
+  } else {
+    notify('❌ Email ou mot de passe incorrect');
+  }
+}
+
+async function logout() {
+  await fetch('/api/logout', { method: 'POST' });
+  currentUser = null;
+  userCompletedLessons = {};
+  updateUIBasedOnAuth();
+  notify('🔓 Déconnecté');
+  showPage('home');
+}
+
+function updateUIBasedOnAuth() {
+  const navActions = document.getElementById('nav-actions');
+  const navUser = document.getElementById('nav-user');
+  const userPointsSpan = document.getElementById('user-points');
+  
+  if (currentUser) {
+    navActions.style.display = 'none';
+    navUser.style.display = 'flex';
+    if (userPointsSpan) userPointsSpan.innerHTML = `⭐ ${currentUser.points || 0}`;
+  } else {
+    navActions.style.display = 'flex';
+    navUser.style.display = 'none';
+  }
+}
+
+// ══════════════════ CHARGEMENT DES COURS ══════════════════
+async function loadCourses() {
+  const container = document.getElementById('courses-container');
+  if (!container) return;
+  
+  const res = await fetch('/api/courses');
+  const courses = await res.json();
+  
+  // Organisation par niveau (manuel si besoin)
+  const beginnerCourses = courses.filter(c => c.level === 'Débutant');
+  const intermediateCourses = courses.filter(c => c.level === 'Intermédiaire');
+  const advancedCourses = courses.filter(c => c.level === 'Avancé');
+  
+  let html = '';
+  
+  // Niveau Débutant
+  if (beginnerCourses.length) {
+    html += `<div class="level-section">
+      <div class="level-badge beginner">🟢 Niveau Débutant</div>
+      <div class="courses-grid">`;
+    beginnerCourses.forEach(c => {
+      html += `
+        <div class="course-card" onclick="openCourse(${c.id})">
+          <div class="course-icon-row"><span class="course-icon">${c.cover_icon || '📚'}</span><span class="course-level-dot dot-green"></span></div>
+          <div class="course-title">${c.title}</div>
+          <div class="course-desc">${c.description || 'Apprenez les bases de ce domaine passionnant.'}</div>
+          <div class="course-meta"><span>📚 ${c.lessons_count || '?'} leçons</span><span>👤 ${c.level}</span></div>
+        </div>`;
+    });
+    html += `</div></div>`;
+  }
+  
+  // Niveau Intermédiaire
+  if (intermediateCourses.length) {
+    html += `<div class="level-section">
+      <div class="level-badge intermediate">🟡 Niveau Intermédiaire</div>
+      <div class="courses-grid">`;
+    intermediateCourses.forEach(c => {
+      html += `
+        <div class="course-card" onclick="openCourse(${c.id})">
+          <div class="course-icon-row"><span class="course-icon">${c.cover_icon || '📚'}</span><span class="course-level-dot dot-amber"></span></div>
+          <div class="course-title">${c.title}</div>
+          <div class="course-desc">${c.description || 'Développez vos compétences techniques.'}</div>
+          <div class="course-meta"><span>📚 ${c.lessons_count || '?'} leçons</span><span>👤 ${c.level}</span></div>
+        </div>`;
+    });
+    html += `</div></div>`;
+  }
+  
+  // Niveau Avancé
+  if (advancedCourses.length) {
+    html += `<div class="level-section">
+      <div class="level-badge advanced">🔴 Niveau Avancé</div>
+      <div class="courses-grid">`;
+    advancedCourses.forEach(c => {
+      html += `
+        <div class="course-card" onclick="openCourse(${c.id})">
+          <div class="course-icon-row"><span class="course-icon">${c.cover_icon || '📚'}</span><span class="course-level-dot dot-red"></span></div>
+          <div class="course-title">${c.title}</div>
+          <div class="course-desc">${c.description || 'Maîtrisez les sujets complexes.'}</div>
+          <div class="course-meta"><span>📚 ${c.lessons_count || '?'} leçons</span><span>👤 ${c.level}</span></div>
+        </div>`;
+    });
+    html += `</div></div>`;
+  }
+  
+  if (html === '') html = '<div style="text-align:center;padding:4rem">Aucun cours disponible pour le moment.</div>';
+  container.innerHTML = html;
+}
+
+async function openCourse(courseId) {
+  currentCourseId = courseId;
+  const res = await fetch(`/api/courses/${courseId}`);
+  const course = await res.json();
+  currentCourseLessons = course.lessons || [];
+  
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const detail = document.getElementById('page-detail');
+  detail.style.display = 'block';
+  detail.classList.add('active');
+  window.scrollTo(0, 0);
+  
+  document.getElementById('detail-title').textContent = course.title;
+  document.getElementById('detail-breadcrumb').textContent = course.title;
+  document.getElementById('detail-lessons-count').textContent = currentCourseLessons.length;
+  
+  const isSecurity = course.title.toLowerCase().includes('hacking') || course.title.toLowerCase().includes('sécurité');
+  document.getElementById('detail-warning').style.display = isSecurity ? 'flex' : 'none';
+  
+  renderLessonsList();
+  await loadUserProgress();
+  updateCourseProgress();
+  if (currentCourseLessons.length > 0) loadQuizForLesson(currentCourseLessons[0].id);
+}
+
+function renderLessonsList() {
+  const list = document.getElementById('lessons-list');
+  list.innerHTML = '';
+  
+  currentCourseLessons.forEach((lesson, idx) => {
+    const isCompleted = userCompletedLessons[lesson.id];
+    const div = document.createElement('div');
+    div.className = 'lesson-item';
+    div.innerHTML = `
+      <div class="lesson-header" onclick="toggleLesson(${idx})">
+        <span class="lesson-num">${String(idx+1).padStart(2,'0')}</span>
+        <span class="lesson-name">${lesson.title}</span>
+        ${isCompleted ? '<span style="color:var(--green);font-size:12px">✓</span>' : ''}
+        <span class="lesson-toggle" id="toggle-lesson-${idx}">▼</span>
+      </div>
+      <div class="lesson-body" id="body-lesson-${idx}">
+        <p>${lesson.content || 'Contenu détaillé de la leçon à venir...'}</p>
+        ${lesson.code_example ? `<div class="code-block"><span class="code-lang">CODE</span><code>${lesson.code_example}</code></div>` : ''}
+        ${lesson.video_url ? `<div style="margin:1rem 0"><iframe width="100%" height="200" src="${lesson.video_url}" frameborder="0" allowfullscreen></iframe></div>` : ''}
+        <button class="btn btn-outline" style="margin-top:0.75rem;font-size:12px" onclick="markLessonComplete(${lesson.id}, ${idx})">
+          ${isCompleted ? '✓ Déjà complété' : 'Marquer comme terminé'}
+        </button>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function toggleLesson(idx) {
+  const body = document.getElementById(`body-lesson-${idx}`);
+  const toggle = document.getElementById(`toggle-lesson-${idx}`);
+  body.classList.toggle('open');
+  toggle.classList.toggle('open');
+}
+
+async function markLessonComplete(lessonId, lessonIdx) {
+  if (!currentUser) {
+    notify('🔐 Veuillez vous connecter pour valider votre progression');
+    openModal('login');
+    return;
+  }
+  
+  const res = await fetch('/api/complete-lesson', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ lesson_id: lessonId })
+  });
+  const data = await res.json();
+  if (data.success) {
+    userCompletedLessons[lessonId] = true;
+    if (currentUser) currentUser.points = data.points;
+    updateUIBasedOnAuth();
+    renderLessonsList();
+    updateCourseProgress();
+    notify(`✅ Leçon terminée ! +20 XP (Total: ${data.points} pts)`);
+    
+    const nextLesson = currentCourseLessons[lessonIdx + 1];
+    if (nextLesson) {
+      document.getElementById('next-lesson').innerHTML = `📚 Prochaine leçon : <strong>${nextLesson.title}</strong>`;
+    } else {
+      document.getElementById('next-lesson').innerHTML = '🎉 Félicitations ! Vous avez terminé ce cours !';
+    }
+    
+    loadDashboard();
+  } else {
+    notify('❌ Erreur lors de la validation');
+  }
+}
+
+function updateCourseProgress() {
+  const total = currentCourseLessons.length;
+  if (total === 0) return;
+  let completed = 0;
+  currentCourseLessons.forEach(lesson => {
+    if (userCompletedLessons[lesson.id]) completed++;
+  });
+  const pct = Math.round((completed / total) * 100);
+  document.getElementById('course-progress-fill').style.width = pct + '%';
+  document.getElementById('course-progress-pct').textContent = pct + '% complété';
+}
+
+async function loadUserProgress() {
+  if (!currentUser) return;
+  const res = await fetch('/api/progress');
+  const data = await res.json();
+  userCompletedLessons = {};
+  if (data.completedLessons) {
+    data.completedLessons.forEach(id => { userCompletedLessons[id] = true; });
+  }
+}
+
+async function loadQuizForLesson(lessonId) {
+  const res = await fetch(`/api/quiz/${lessonId}`);
+  const questions = await res.json();
+  const quizDiv = document.getElementById('sidebar-quiz');
+  if (!quizDiv) return;
+  if (!questions.length) {
+    quizDiv.innerHTML = '<div class="quiz-card">Aucun quiz pour cette leçon.</div>';
+    return;
+  }
+  const q = questions[0];
+  quizDiv.innerHTML = `
+    <div class="quiz-card">
+      <div class="quiz-q">${q.question}</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" onclick="answerQuiz(1, ${q.correct_answer}, this, ${q.id})">${q.option1}</button>
+        <button class="quiz-opt" onclick="answerQuiz(2, ${q.correct_answer}, this, ${q.id})">${q.option2}</button>
+        <button class="quiz-opt" onclick="answerQuiz(3, ${q.correct_answer}, this, ${q.id})">${q.option3}</button>
+        <button class="quiz-opt" onclick="answerQuiz(4, ${q.correct_answer}, this, ${q.id})">${q.option4}</button>
+      </div>
+    </div>
+  `;
+}
+
+function answerQuiz(selected, correct, btn, quizId) {
+  const opts = btn.closest('.quiz-options').querySelectorAll('.quiz-opt');
+  opts.forEach(o => o.disabled = true);
+  if (selected === correct) {
+    btn.classList.add('correct');
+    notify('🎉 Bonne réponse ! +10 XP');
+    fetch('/api/complete-lesson', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lesson_id: -quizId, isQuiz: true })
+    }).catch(e => console.log);
+  } else {
+    btn.classList.add('wrong');
+    opts[correct-1].classList.add('correct');
+    notify('❌ Mauvaise réponse. Réessaie !');
+  }
+}
+
+// ══════════════════ DASHBOARD ══════════════════
+async function loadDashboard() {
+  if (!currentUser) {
+    showPage('home');
+    return;
+  }
+  document.getElementById('dash-avatar').textContent = currentUser.username.charAt(0).toUpperCase();
+  document.getElementById('dash-username').textContent = currentUser.username;
+  document.getElementById('dash-email').textContent = currentUser.email;
+  document.getElementById('stat-points').textContent = currentUser.points || 0;
+  
+  const completedCount = Object.keys(userCompletedLessons).length;
+  document.getElementById('-stat-lessons-done').textContent = completedCount;
+  document.getElementById('stat-courses-completed').textContent = Math.floor(completedCount / 5);
+  
+  const badgesList = document.getElementById('badges-grid');
+  if (badgesList) {
+    badgesList.innerHTML = `
+      <div class="badge-item ${completedCount >= 1 ? '' : 'locked'}"><span class="badge-emoji">🌱</span><div class="badge-name">Premier pas</div></div>
+      <div class="badge-item ${completedCount >= 10 ? '' : 'locked'}"><span class="badge-emoji">🔥</span><div class="badge-name">7 jours streak</div></div>
+      <div class="badge-item ${completedCount >= 20 ? '' : 'locked'}"><span class="badge-emoji">💡</span><div class="badge-name">Curieux</div></div>
+      <div class="badge-item ${completedCount >= 50 ? '' : 'locked'}"><span class="badge-emoji">🏆</span><div class="badge-name">Expert</div></div>
+    `;
+  }
+  
+  const inProgressDiv = document.getElementById('in-progress-list');
+  if (inProgressDiv) {
+    inProgressDiv.innerHTML = `
+      <div class="ip-item">
+        <span class="ip-icon">🔒</span>
+        <div class="ip-info">
+          <div class="ip-title">Cybersécurité - Fondamentaux</div>
+          <div class="ip-bar-bg"><div class="ip-bar-fill" style="width:${Math.min(100, completedCount*10)}%"></div></div>
+        </div>
+        <div class="ip-pct">${Math.min(100, completedCount*10)}%</div>
+      </div>
+      <div class="ip-item">
+        <span class="ip-icon">🐧</span>
+        <div class="ip-info">
+          <div class="ip-title">Linux pour hackers</div>
+          <div class="ip-bar-bg"><div class="ip-bar-fill" style="width:${Math.min(100, completedCount*5)}%"></div></div>
+        </div>
+        <div class="ip-pct">${Math.min(100, completedCount*5)}%</div>
+      </div>
+    `;
+  }
+}
+
+function filterCourses(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.course-card').forEach(card => {
+    const title = card.querySelector('.course-title')?.textContent.toLowerCase() || '';
+    card.style.display = (!q || title.includes(q)) ? '' : 'none';
+  });
+}
+
+// Initialisation
+document.getElementById('auth-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+loadCourses();
+updateUIBasedOnAuth();
+</script>
+</body>
+</html>
